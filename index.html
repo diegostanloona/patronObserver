@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patrón Observer</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <style>
+    	#toast-container {
+  top: 0px !important;
+  right: auto !important;
+  left:3% !important;  
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Patrón Observer</span>
+                                                <p>&nbsp;</p>
+
+                    </div>
+                    <div class="card-action">
+                        <button id="activarObservers" class="btn purple waves-effect">Activar Observadores</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="card red darken-2">
+                    <div class="card-content">
+                        <span class="card-title" style="color:white;">Observer 1</span>
+                        <i style="color:white;">Desuscrito</i>
+                    </div>
+                    <div class="card-action">
+                        <button id="observer1" class="btn purple waves-effect">Suscribir / desuscribir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="card amber">
+                    <div class="card-content">
+                        <span class="card-title" style="color:white;">Observer 2</span>
+                        <i style="color:white">Desuscrito</i>
+                    </div>
+                    <div class="card-action">
+                        <button id="observer2" class="btn purple waves-effect">Suscribir / desuscribir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+
+
+
+
+
+    function Subject() {
+        this.observers = []//OBSERVADORES
+    }
+    Subject.prototype = {
+        subscribe: function(fn) {//AÑADIR OBSERVADOR
+            this.observers.push(fn)
+        },
+        unsubscribe: function(fnToRemove) {//REMOVER OBSERVADOR
+            this.observers = this.observers.filter(fn => {
+                if (fn != fnToRemove)
+                    return fn
+            })
+        },
+        fire: function() {//FUNCIÓN QUE ACTIVA LOS OBSERVADORES
+            this.observers.forEach(fn => {
+                fn.call()
+            })
+        }
+    }
+
+    const subject = new Subject()
+
+    var observer1 = false
+    var observer2 = false
+    function Observer1() {
+        M.toast({ html: 'Soy el observer 1' })
+    }
+
+    function Observer2() {
+        M.toast({ html: 'Soy el observer 2' })
+    }
+
+
+    document.getElementById("observer1").onclick = () => {
+        if (!observer1) {
+            subject.subscribe(Observer1)
+            document.getElementsByTagName("i")[0].innerHTML = "Suscrito"
+            observer1 = true
+        } else {
+            subject.unsubscribe(Observer1)
+            observer1 = false
+            document.getElementsByTagName("i")[0].innerHTML = "Desuscrito"
+        }
+    }
+
+    document.getElementById("observer2").onclick = () => {
+        if (!observer2) {
+            subject.subscribe(Observer2)
+            document.getElementsByTagName("i")[1].innerHTML = "Suscrito"
+            observer2 = true
+        } else {
+            subject.unsubscribe(Observer2)
+            observer2 = false
+            document.getElementsByTagName("i")[1].innerHTML = "Desuscrito"
+        }
+    }
+
+    document.getElementById("activarObservers").onclick = () => {
+        subject.fire()
+    }
+
+    
+
+
+
+
+
+
+
+    
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
