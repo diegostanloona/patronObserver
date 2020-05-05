@@ -53,21 +53,30 @@
         </div>
     </div>
     <script>
+
+
+
+
+
+
+
+
+
     function Subject() {
         this.observers = [] //OBSERVADORES
 
-        this.subscribe = fn => { //AÑADIR OBSERVADOR
-            this.observers.push(fn)
+        this.subscribe = observer => { //AÑADIR OBSERVADOR
+            this.observers.push(observer)
         }
-        this.unsubscribe = fnToRemove => { //REMOVER OBSERVADOR
-            this.observers = this.observers.filter(fn => {
-                if (fn != fnToRemove)
-                    return fn
+        this.unsubscribe = observerARemover => { //REMOVER OBSERVADOR
+            this.observers = this.observers.filter(observer => {
+                if (observer != observerARemover)
+                    return observer
             })
         }
         this.notifyObservers = () => { //FUNCIÓN QUE NOTIFICA LOS OBSERVADORES
-            this.observers.forEach(fn => {
-                fn.update()
+            this.observers.forEach(observer => {
+                observer.update()
             })
         }
     }
@@ -83,6 +92,13 @@
     const subject = new Subject()
     const observer1 = new Observer("Observer 1")
     const observer2 = new Observer("Observer 2")
+
+
+
+
+
+
+
 
 
 
