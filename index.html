@@ -77,44 +77,48 @@
         },
         fire: function() {//FUNCIÓN QUE ACTIVA LOS OBSERVADORES
             this.observers.forEach(fn => {
-                fn.call()
-            })
+                fn.update()
+                            })
         }
     }
 
+
+    function Observer(nombre){
+    	this.nombre = nombre
+    	this.update = ()=>{
+    		 M.toast({ html: 'Soy '+this.nombre })
+    	}
+    }
+
     const subject = new Subject()
+    const observer1 = new Observer("Observer 1")
+    const observer2 = new Observer("Observer 2")
 
-    var observer1 = false
-    var observer2 = false
-    function Observer1() {
-        M.toast({ html: 'Soy el observer 1' })
-    }
+    var observer1flag = false
+    var observer2flag = false
 
-    function Observer2() {
-        M.toast({ html: 'Soy el observer 2' })
-    }
-
+    
 
     document.getElementById("observer1").onclick = () => {
-        if (!observer1) {
-            subject.subscribe(Observer1)
+        if (!observer1flag) {
+            subject.subscribe(observer1)
             document.getElementsByTagName("i")[0].innerHTML = "Suscrito"
-            observer1 = true
+            observer1flag = true
         } else {
-            subject.unsubscribe(Observer1)
-            observer1 = false
+            subject.unsubscribe(observer1)
+            observer1flag = false
             document.getElementsByTagName("i")[0].innerHTML = "Desuscrito"
         }
     }
 
     document.getElementById("observer2").onclick = () => {
-        if (!observer2) {
-            subject.subscribe(Observer2)
+        if (!observer2flag) {
+            subject.subscribe(observer2)
             document.getElementsByTagName("i")[1].innerHTML = "Suscrito"
-            observer2 = true
+            observer2flag = true
         } else {
-            subject.unsubscribe(Observer2)
-            observer2 = false
+            subject.unsubscribe(observer2)
+            observer2flag = false
             document.getElementsByTagName("i")[1].innerHTML = "Desuscrito"
         }
     }
@@ -131,7 +135,7 @@
 
 
 
-    
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
